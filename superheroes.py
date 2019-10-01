@@ -59,11 +59,12 @@ class Hero:
 		self.armors.append(armor)
 
 
-	def defend(self):
-		armors = 0 
+	def defend(self, damage_amt=0):
+		block = 0 
 		for armor in self.armors:
-			armors += armor.block()
-		return armors
+			blocks = armor.block()
+			block += blocks
+		return block
 
 	def take_damage(self, damage):
 		health = damage - self.defend()
@@ -106,7 +107,7 @@ class Hero:
         
 	def add_kill(self, num_kills):
 		self.kills += num_kills
-    	''' Update kills with num_kills'''
+		''' Update kills with num_kills'''
 
 class Weapon(Ability):
 
