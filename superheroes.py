@@ -137,82 +137,63 @@ class Team:
 		return heroes
 
 	def attack(self, other_team):
-        ''' Battle each team against each other.'''
-        # TODO: Randomly select a living hero from each team and have
-        # them fight until one or both teams have no surviving heroes.
-        # Hint: Use the fight method in the Hero class.
-        pass
-
-    def revive_heroes(self, health=100):
-        ''' Reset all heroes health to starting_health'''
-        # TODO: This method should reset all heroes health to their
-        # original starting value.
-        pass
-
-    """
-    Calculates kill to death ratio for each hero KD = Kill Death.
-    Returns: The team's ratio
-    """
-
-    def stats(self):
-        team_kills = 0
-        team_deaths = 0
-        for hero in self.hero_list:
-            team_kills += hero.kills
-            team_deaths += hero.deaths
-
-            kd = round(hero.kills / hero.deaths,
-                       2) if hero.deaths > 0 else hero.kills
-            print(f'{hero.name} has {hero.kills} kills and {hero.deaths} deaths')
-            print(f'{hero.name} has a KD of: {kd}')
-
-        return round(team_kills / team_deaths, 2) if team_deaths > 0 else team_kills
+		while len(self.team_alive()) > 0 and len(other_team.team_alive()) > 0:
+			heroes = choice(self.team_alive())
+			enemy_list = choice(other_team.team_alive())
+			heroes.fight(enemy_list)
+	def revive_heroes(self, health=100):
+		for heroes in self.hero_list:
+			heroes.current_health = heroes.starting_health
+	def stats(self):
+		team_kills = 0
+		team_deaths = 0
+		for hero in self.hero_list:
+			team_kills += hero.kills
+			team_deaths += hero.deaths
+			kd = round(hero.kills / hero.deaths,2) if hero.deaths > 0 else hero.kills
+			print(f'{hero.name} has {hero.kills} kills and {hero.deaths} deaths')
+			print(f'{hero.name} has a KD of: {kd}')
+		return round(team_kills / team_deaths, 2) if team_deaths > 0 else team_kills
 
 
 class Arena:
-    def __init__(self):
-        self.team_one = Team('Team 1 Heroes')
-        self.team_two = Team('Team 2 Heroes')
+	def __init__(self):
+		self.team_one = Team('Team 1 Heroes')
+		self.team_two = Team('Team 2 Heroes')
 
-    def create_ability(self):
-        ability_name = input('Create an ability name: ')
-        while True:
-            damage_input = input(
+	def create_ability(self):
+		ability_name = input('Create an ability name: ')
+		while True:
+			damage_input = input(
                 'Enter the max amount of damage for your ability: ')
-            if damage_input.isnumeric():
-                break
-            elif damage_input.isalnum():
-                print('Please enter an input with numbers only')
-        return Ability(ability_name, int(damage_input))
+			if damage_input.isnumeric():
+				break
+			elif damage_input.isalnum():
+				print('Please enter an input with numbers only')
+		return Ability(ability_name, int(damage_input))
 
-    def create_weapon(self):
-        weapon_name = input('Create a weapon name: ')
+	def create_weapon(self):
+		weapon_name = input('Create a weapon name: ')
 
-        while True:
-            weapon_damage = input('Enter how much damage your item will do: ')
-            if weapon_damage.isnumeric():
-                break
-            elif weapon_damage.isalnum():
-                print('Please enter an input with numbers only')
+		while True:
+			weapon_damage = input('Enter how much damage your item will do: ')
+			if weapon_damage.isnumeric():
+				break
+			elif weapon_damage.isalnum():
+				print('Please enter an input with numbers only')
 
-        return Weapon(weapon_name, int(weapon_damage))
+		return Weapon(weapon_name, int(weapon_damage))
 
-    def create_armor(self):
-        armor_name = input('Create an armor name: ')
+	def create_armor(self):
+		armor_name = input('Create an armor name: ')
+		while True:
+			block_input = input('Enter how much your armor will block: ')
+			if block_input.isnumeric():
+				break
+			elif block_input.isalnum():
+				print('Please enter an input with numbers only')
+		return Armor(armor_name, int(block_input))
 
-        while True:
-            block_input = input('Enter how much your armor will block: ')
-            if block_input.isnumeric():
-                break
-            elif block_input.isalnum():
-                print('Please enter an input with numbers only')
-
-        return Armor(armor_name, int(block_input))
-
-    """
-    Allows the user to create heroes with ability, weapon, and armor customization
-    Returns: The user's custom heroes
-    """
 
     def create_hero(self):
         hero_name = input('Enter the name of your hero: ')
