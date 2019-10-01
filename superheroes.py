@@ -1,4 +1,5 @@
-from random import choice, randint
+
+from random import randint, choice
 
 class Ability:
 
@@ -67,15 +68,9 @@ class Hero:
 	def take_damage(self, damage):
 		health = damage - self.defend()
 		self.current_health = health
-		
 
-
-		
 	def is_alive(self):
-		if self.current_health > 0:
-			return True
-		else:
-			return False
+		return self.current_health > 0
 		'''Return True or False depending on whether the hero is alive or not.
 		'''
   # TODO: Check whether the hero is alive and return true or false
@@ -84,19 +79,19 @@ class Hero:
 		while self.is_alive() and opponent.is_alive():
 			self.take_damage(opponent.attack())
 			opponent.take_damage(self.attack())
-			if self.current_health < 0:
+			if self.current_health <= 0:
 
 				print('=' * 24)
 				print('BATTLE:\n')
-				print(f'\n{self.name} beat {opponent.name} and won!')
 				self.add_kill(1)
 				opponent.add_deaths(1)
+				print(f'\n{self.name} beat {opponent.name} and won!')
 				break
 			elif self.current_health <= 0:
 				print('=' * 24)
 				print('Battle:\n')
-				opponent.add_deaths(1)
 				self.add_kill(1)
+				opponent.add_deaths(1)
 				print(f'{opponent.name} won!')
 			else:
 				print("It's a draw!")
@@ -275,13 +270,13 @@ class Arena:
 		self.team_one.attack(self.team_two)
 
 	def show_stats(self):
-		print('=' * 24)
+		print('=' * 20)
 		print('TEAM ONE STATISTICS: \n')
 		print(f'\nTeam one\'s stats: {self.team_one.stats()}\n')
-		print('=' * 24)
+		print('=' * 20)
 		print('TEAM TWO STATISTICS: \n')
 		print(f'\nTeam two\'s stats: {self.team_two.stats()}\n')
-		print('=' * 24)
+		print('=' * 20)
 		print('FIGHT OUTCOME: \n')
 		if self.team_one.team_alive():
 			hero_list = [hero.name for hero in self.team_one.hero_list]
@@ -289,7 +284,7 @@ class Arena:
 		else:
 			hero_list = [hero.name for hero in self.team_two.hero_list]
 			print(f'Team 2 is victorious!\nChampions: {", ".join(hero_list)}')
-		print('=' * 24)
+		print('=' * 20)
 
 if __name__ == "__main__":
 	game_is_running = True
