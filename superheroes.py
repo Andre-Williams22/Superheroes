@@ -335,8 +335,10 @@ class Arena():
             if add_ability == 'Y':
                 ability = self.create_ability()
                 hero.add_ability(ability)
+                break
             else:
                 equip_ability = False 
+                break
         
         while equip_weapon:
             print(f"\nWould like to equip {hero_name} with weapons?")
@@ -344,8 +346,10 @@ class Arena():
             if add_weapon == 'Y':
                 weapon = self.create_weapon()
                 hero.add_weapon(weapon)
+                break
             else:
                 equip_weapon = False 
+                break
         
         while equip_armor:
             print(f"\nWould like to equip {hero_name} with armors?")
@@ -353,6 +357,7 @@ class Arena():
             if add_armor == 'Y':
                 armor = self.create_armor()
                 hero.add_armor(armor)
+                break
             else:
                 equip_armor = False 
 
